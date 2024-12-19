@@ -1,21 +1,32 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
 }
 
+val properties = gradleLocalProperties(rootProject.rootDir, providers)
+val avPubId = checkNotNull(properties.getProperty("av_pub_id")) {
+    "av_pub_id is missing in local.properties"
+}
+val avTagId = checkNotNull(properties.getProperty("av_tag_id")) {
+    "av_tag_id is missing in local.properties"
+}
+
 android {
     namespace = "com.adservrs.adplayer.lite.example"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.adservrs.adplayer.lite.example"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "AV_PUB_ID", "\"$avPubId\"")
+        buildConfigField("String", "AV_TAG_ID", "\"$avTagId\"")
     }
 
     buildTypes {
@@ -24,19 +35,25 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
     }
+
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
 dependencies {
+    //noinspection UseTomlInstead
+    implementation("com.adservrs:ad-player-lite:2.0.0-beta01")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
