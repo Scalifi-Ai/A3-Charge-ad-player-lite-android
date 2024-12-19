@@ -15,3 +15,9 @@ av_tag_id={tag id goes here}
 ```
 
 After this project can simply be opened in the Android Studio and built.
+
+
+## Additional Resources
+
+More detailed documentation can be found here:
+https://aniview.github.io/ad-player-lite-android/
