@@ -15,7 +15,7 @@ fun MainScreen(modifier: Modifier = Modifier) {
                 val view = AdPlayerView(it)
                 view.load(
                     pubId = "68540ce88ee8d56dbe0d78a6",
-                    tagId = "689497109dc347458b0c614a",
+                    tagId = "6894984db91db4b4c409aeab",
                 )
                 view
             },
